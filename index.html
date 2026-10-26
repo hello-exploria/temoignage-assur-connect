@@ -28,7 +28,9 @@
   h1 { margin: 0 0 14px; color: var(--nuit); font: 700 clamp(30px, 5vw, 46px)/1.12 "Source Serif 4", Georgia, serif; }
   .chapo { margin: 0 0 28px; max-width: 760px; font-size: 19px; color: var(--texte); }
   .video { position: relative; aspect-ratio: 16 / 9; background: #0b1226; border-radius: 14px; overflow: hidden; box-shadow: 0 18px 50px rgba(16, 28, 61, .18); }
-  .video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .video video { position: absolute; inset: 0; width: 100%; height: 100%; background: #0b1226; }
+  .chapitres li { cursor: pointer; }
+  .chapitres li:hover { color: var(--nuit); }
   .chiffres { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 28px 0 8px; }
   .chiffre { background: var(--carte); border: 1px solid var(--trait); border-radius: 12px; padding: 18px 18px 16px; }
   .chiffre b { display: block; color: var(--nuit); font: 700 26px/1.2 "Source Serif 4", Georgia, serif; margin-bottom: 6px; }
@@ -61,7 +63,9 @@
   <p class="chapo">Nathalie Benchetrit dirige Assur Connect, courtier spécialisé dans l’assurance des sportifs. Avec ExplorIA Labs, elle a mis en place un agent IA qui prépare l’analyse des dossiers et les réponses aux réclamations. Chaque réponse est relue par un gestionnaire avant l’envoi.</p>
 
   <div class="video">
-    <iframe src="https://drive.google.com/file/d/1w79D3Gi6LF7uSL5jSLH2UrLWvUKqNXk7/preview" allow="autoplay; fullscreen" allowfullscreen title="Témoignage de Nathalie Benchetrit, Assur Connect"></iframe>
+    <video id="video" controls playsinline preload="metadata" poster="poster.jpg" title="Témoignage de Nathalie Benchetrit, Assur Connect">
+      <source src="temoignage-assur-connect.mp4" type="video/mp4">
+    </video>
   </div>
 
   <div class="chiffres">
@@ -94,5 +98,17 @@
 
   <p class="note">Vidéo partagée à titre privé : merci de ne pas la diffuser.</p>
 </div>
+<script>
+  // un clic sur un chapitre lance la vidéo à ce moment
+  const video = document.getElementById('video');
+  document.querySelectorAll('.chapitres li').forEach(li => {
+    li.addEventListener('click', () => {
+      const [m, s] = li.querySelector('time').textContent.split(':').map(Number);
+      video.currentTime = m * 60 + s;
+      video.play();
+      video.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+  });
+</script>
 </body>
 </html>
